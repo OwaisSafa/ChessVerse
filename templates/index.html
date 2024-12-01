@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chess Royale</title>
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='img/favicon.ico') }}">
+    
+    <!-- External Libraries -->
+    <link rel="stylesheet" href="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.css">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://unpkg.com/@chrisoakman/chessboardjs@1.0.0/dist/chessboard-1.0.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/chess.js/0.10.3/chess.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js"></script>
+</head>
+<body>
+    <div class="game-container">
+        <!-- Menu Screen -->
+        <section id="menu-screen" class="screen active">
+            <div class="menu-content">
+                <h1>Chess Royale</h1>
+                <div class="menu-buttons">
+                    <button id="play-ai" class="menu-button">Play vs AI</button>
+                    <button id="play-local" class="menu-button">Local Game</button>
+                    <button id="play-online" class="menu-button">Online Play</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Game Screen -->
+        <section id="game-screen" class="screen">
+            <div class="player-color"></div>
+            <div id="board-container">
+                <div class="game-header">
+                    <div id="game-mode-display" class="game-mode">Local Game</div>
+                    <div id="game-status" class="game-status">White to Move</div>
+                </div>
+                <div id="board" class="chessboard" style="width: 500px;"></div>
+                <div class="timer-container">
+                    <div class="player-timer white-timer">
+                        <div class="player-label">White</div>
+                        <div id="white-timer" class="timer">00:45</div>
+                    </div>
+                    <div class="player-timer black-timer">
+                        <div class="player-label">Black</div>
+                        <div id="black-timer" class="timer">00:45</div>
+                    </div>
+                </div>
+                <div class="game-controls">
+                    <button id="resign-button" class="game-control-btn">Resign</button>
+                    <button id="draw-button" class="game-control-btn">Offer Draw</button>
+                    <button id="flip-board" class="game-control-btn">Flip Board</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- AI Level Selection Screen -->
+        <div id="ai-level-screen" class="screen">
+            <div class="menu-content">
+                <h1>Select AI Difficulty</h1>
+                <div class="menu-buttons">
+                    <button id="ai-difficulty-easy" class="menu-button">Easy</button>
+                    <button id="ai-difficulty-medium" class="menu-button">Medium</button>
+                    <button id="ai-difficulty-hard" class="menu-button">Hard</button>
+                </div>
+            </div>
+        </div>
+
+                <!-- Checkmate Screen -->
+        <section id="checkmate-screen" class="screen">
+            <div class="checkmate-container">
+                <h1 id="checkmate-winner-text" class="winner-text">Winner Placeholder</h1>
+                <div class="checkmate-buttons">
+                    <button id="checkmate-rematch-btn" class="menu-button">Rematch</button>
+                    <button id="checkmate-menu-btn" class="menu-button">Main Menu</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Online Play Screen -->
+        <section id="room-selection-screen" class="screen">
+            <div class="menu-content">
+                <h1>Chess Royale</h1>
+                <div class="menu-buttons">
+                    <button id="create-room-btn" class="menu-button">Create Game</button>
+                    <button id="join-room-btn" class="menu-button">Join Game</button>
+                </div>
+                <div id="room-code-display" class="menu-status"></div>
+                <div id="join-room-form" class="menu-form" style="display: none;">
+                    <input type="text" id="room-id" placeholder="Enter 4-digit code" maxlength="4" class="menu-input">
+                    <button id="submit-join" class="menu-button">Join</button>
+                </div>
+                <button id="back-to-menu" class="menu-button">Back to Menu</button>
+            </div>
+        </section>
+
+        <!-- AI Difficulty Modal -->
+        <div id="ai-difficulty-modal" class="modal">
+            <div class="menu-content modal-content">
+                <h1>Select Difficulty</h1>
+                <div class="menu-buttons">
+                    <button id="ai-difficulty-easy" class="menu-button">Easy</button>
+                    <button id="ai-difficulty-medium" class="menu-button">Medium</button>
+                    <button id="ai-difficulty-hard" class="menu-button">Hard</button>
+                    <button id="ai-difficulty-expert" class="menu-button">Expert</button>
+                </div>
+                <button id="close-difficulty-modal" class="menu-button">Back to Menu</button>
+            </div>
+        </div>
+
+        <!-- Add these inside the game-container div -->
+        <div id="error-message" class="message error-message"></div>
+        <div id="info-message" class="message info-message"></div>
+
+        <!-- Game Modal -->
+        <div id="gameModal" class="modal">
+            <div class="modal-content">
+                <h2 id="modalTitle"></h2>
+                <p id="modalMessage"></p>
+                <div id="modalButtons" class="modal-buttons"></div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>

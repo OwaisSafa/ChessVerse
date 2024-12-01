@@ -1,0 +1,14 @@
+Flask==2.3.3
+Flask-SocketIO==5.3.6
+python-chess==1.999
+eventlet==0.33.3
+python-dotenv==1.0.0
+python-socketio==5.9.0
+Werkzeug>=2.3.7
+bidict==0.22.1
+dnspython==2.3.0
+six==1.16.0
+python-engineio>=4.5.1
+dataclasses>=0.6
+typing-extensions>=4.7.1
+gunicorn==21.2.0
